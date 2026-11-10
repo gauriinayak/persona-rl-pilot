@@ -1,8 +1,8 @@
 # Persona RL Pilot
 
-Does a model's response style before reinforcement learning change how it responds to users afterward? This independent pilot is inspired by [Project 1 on Lujain Ibrahim's Pivotal Research profile](https://www.pivotal-research.org/mentors/profile/lujain-ibrahim).
+Does a model's response style before reinforcement learning change how it responds to users afterward? 
 
-Both character variants see the same supervised prompts and learn to give factually grounded replies. **Evidence-first** states the assessment upfront. **Rapport-first** starts by acknowledging the user or their reasoning and then gives the assessment. Both variants then receive the same arithmetic RL protocol, with a reward for an exact answer. The behavioral probes ask whether the assistant agrees with a user's claim when the available evidence supports or contradicts it.
+Here, I fine-tune two versions of the same model on identical prompts with factually equivalent replies. The evidence-first version starts by saying whether the user’s claim is supported by the evidence. The rapport-first version first responds to the user’s reasoning and then gives the same answer. Both versions then undergo the same arithmetic RL procedure (adding two numbers and finding the remainder after dividing by 17, with a reward for the exact answer). Before and after this stage, I test whether each model endorses claims supported by the evidence and corrects claims contradicted by it. Comparing those changes across the two versions lets us ask whether the initial response style shapes how later training affects agreement with users.
 
 | Checkpoint | Purpose |
 | --- | --- |
