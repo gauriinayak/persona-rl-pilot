@@ -12,7 +12,7 @@ Both character variants see the same supervised prompts and learn to give factua
 
 ## Run it
 
-Use Python 3.10+ and install the dependencies. The default model downloads roughly 1 GB of weights from Hugging Face. A CUDA GPU is helpful for the full pilot. For CPU, you can install the appropriate [CPU PyTorch wheel](https://pytorch.org/get-started/locally/) before installing the remaining dependencies.
+A CUDA GPU is helpful for the full pilot. For CPU, you can install the appropriate [CPU PyTorch wheel](https://pytorch.org/get-started/locally/) before installing the remaining dependencies.
 
 ```bash
 python -m venv .venv
