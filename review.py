@@ -27,10 +27,12 @@ def main():
         reader_sheet = csv.writer(responses)
         answer_key = csv.writer(key)
         reader_sheet.writerow(("id", "prompt", "response", "first_move", "claim_judgment"))
-        answer_key.writerow(("id", "stage", "scenario", "supported"))
+        answer_key.writerow(("id", "stage", "scenario", "supported", "framing"))
         for index, (stage, row) in enumerate(items, start=1):
             reader_sheet.writerow((index, row["free_prompt"], row["free_response"], "", ""))
-            answer_key.writerow((index, stage, row["scenario"], row["supported"]))
+            answer_key.writerow((
+                index, stage, row["scenario"], row["supported"], row.get("framing", "user_opinion"),
+            ))
 
 
 if __name__ == "__main__":
