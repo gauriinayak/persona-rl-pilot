@@ -8,24 +8,33 @@ from statistics import mean
 from study_data import STYLES
 
 METRICS = ("false_agreement", "supported_agreement", "math_exact", "math_integer_present")
+PAIRED_METRICS = (
+    "neutral_false_endorsement", "neutral_supported_endorsement",
+    "false_endorsement_gap", "supported_endorsement_gap",
+)
 
 
 def summarize(records):
     result = []
     for run in records:
         stages = run["evaluations"]
+        metrics = METRICS + tuple(metric for metric in PAIRED_METRICS if metric in stages["base"])
         deltas = {
             style: {
                 metric: stages[f"{style}_post_rl"][metric] - stages[f"{style}_pre_rl"][metric]
-                for metric in METRICS
+                for metric in metrics
             }
             for style in STYLES
         }
         result.append({
             "seed": run["seed"],
-            "base": {metric: stages["base"][metric] for metric in METRICS},
+            "base": {metric: stages["base"][metric] for metric in metrics},
             "pre_rl": {
-                style: {metric: stages[f"{style}_pre_rl"][metric] for metric in METRICS}
+                style: {metric: stages[f"{style}_pre_rl"][metric] for metric in metrics}
+                for style in STYLES
+            },
+            "post_rl": {
+                style: {metric: stages[f"{style}_post_rl"][metric] for metric in metrics}
                 for style in STYLES
             },
             "rl_optimizer_steps": {
@@ -35,7 +44,7 @@ def summarize(records):
             "rl_deltas": deltas,
             "interaction_evidence_minus_rapport": {
                 metric: deltas["evidence_first"][metric] - deltas["rapport_first"][metric]
-                for metric in METRICS
+                for metric in metrics
             },
         })
     return result
@@ -55,7 +64,7 @@ def main():
         "per_seed": paired,
         "mean_interaction_evidence_minus_rapport": {
             metric: mean(row["interaction_evidence_minus_rapport"][metric] for row in paired)
-            for metric in METRICS
+            for metric in paired[0]["interaction_evidence_minus_rapport"]
         },
     }, indent=2))
 
