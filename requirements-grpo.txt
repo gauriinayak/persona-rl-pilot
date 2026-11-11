@@ -1,0 +1,11 @@
+# Step-0 GRPO environment. Needs Python >=3.11. Use a fresh venv: these pins conflict with requirements.txt,
+# which stays frozen for reproducing the pilot (tag pilot-v0).
+# TRL is pinned exactly because GRPOConfig changes between releases (e.g. max_prompt_length was removed).
+# The versions actually used are recorded in each report.json under protocol.versions.
+# Optional, for much faster generation:  pip install "trl[vllm]"  then pass --vllm
+trl==1.17.1
+transformers>=4.56.2
+peft>=0.17.0
+accelerate>=1.11.0
+datasets>=4.7.0
+torch>=2.6,<3
